@@ -1,0 +1,58 @@
+# Throwaway Day 0 set. Replace from ~150 blind dev narratives before tagging prereg-v1.
+# Do not inspect answerer output until that tag.
+status: throwaway-day0
+
+direct:
+  id: direct_relief
+  type: noul
+  jev: Will this complaint end with monetary relief?
+  nli_hypothesis: The consumer will receive monetary relief for this complaint.
+
+questions:
+  - id: mentions_amount
+    type: noul
+    jev: Does the consumer mention a specific dollar amount, fee, or charge?
+    nli_hypothesis: The consumer mentions a specific dollar amount, fee, or charge.
+
+  - id: contacted_company
+    type: noul
+    jev: Does the consumer say they already contacted the company about this problem?
+    nli_hypothesis: The consumer already contacted the company about this problem.
+
+  - id: asks_refund
+    type: noul
+    jev: Does the consumer ask for a refund, credit, or reimbursement?
+    nli_hypothesis: The consumer asks for a refund, credit, or reimbursement.
+
+  - id: unauthorized
+    type: noul
+    jev: Does the consumer describe a charge or transfer they say they did not authorize?
+    nli_hypothesis: The consumer describes an unauthorized charge or transfer.
+
+  - id: harm_scale
+    type: score
+    jev: How large is the monetary harm the consumer describes?
+    levels:
+      - The consumer does not describe a monetary loss.
+      - The consumer describes a fee or charge of under a hundred dollars.
+      - The consumer describes a loss of hundreds of dollars.
+      - The consumer describes a loss of thousands of dollars, a drained account, or an account closure.
+    nli_hypotheses:
+      - The consumer does not describe a monetary loss.
+      - The consumer describes a fee or charge of under a hundred dollars.
+      - The consumer describes a loss of hundreds of dollars.
+      - The consumer describes a loss of thousands of dollars, a drained account, or an account closure.
+
+  - id: company_response_so_far
+    type: score
+    jev: What does the consumer say the company has done so far?
+    levels:
+      - The consumer does not describe any response from the company.
+      - The consumer says the company acknowledged the issue but has not resolved it.
+      - The consumer says the company refused, ignored, or closed the request without help.
+      - The consumer says the company offered a partial fix that the consumer still disputes.
+    nli_hypotheses:
+      - The consumer does not describe any response from the company.
+      - The consumer says the company acknowledged the issue but has not resolved it.
+      - The consumer says the company refused, ignored, or closed the request without help.
+      - The consumer says the company offered a partial fix that the consumer still disputes.

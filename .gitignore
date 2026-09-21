@@ -1,0 +1,15 @@
+.venv/
+__pycache__/
+.pytest_cache/
+*.egg-info/
+dist/
+build/
+.ruff_cache/
+.mypy_cache/
+.cache/
+uv.lock.bak
+
+# Raw CSV, candidates, SQLite answer cache, bge cache. Everything in frozen/ and results/ is committed.
+data/
+*.sqlite
+*.sqlite-*
