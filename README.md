@@ -10,7 +10,7 @@ The experiment is specified in [`PLAN.md`](PLAN.md). Frozen choices are tagged `
 
 ## Status
 
-Pipeline built end to end and tested on a synthetic fixture. Not yet tagged. `questions.yaml` is a throwaway Day 0 set.
+Tagged `prereg-v1`: products, questions, splits and margin frozen (see [`CHANGELOG.md`](CHANGELOG.md)). Answer runs next.
 
 ## Setup
 

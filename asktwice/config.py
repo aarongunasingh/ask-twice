@@ -51,7 +51,10 @@ PRODUCT_CANDIDATES = (
     "Virtual currency",
 )
 # Frozen on Day 0 after base-rate check. None = keep PRODUCT_CANDIDATES.
-SELECTED_PRODUCTS: tuple[str, ...] | None = None
+SELECTED_PRODUCTS: tuple[str, ...] | None = (
+    "Checking or savings account",
+    "Money transfer, virtual currency, or money service",
+)
 
 RELIEF_RATE_LO = 0.05
 RELIEF_RATE_HI = 0.30
@@ -59,7 +62,9 @@ RELIEF_RATE_HI = 0.30
 # 20k + headroom: up to 2.5% answer failures still leave >= 20k, so 10k keeps 5 draws.
 SAMPLE_TRAIN = 20_500
 SAMPLE_DEV = 2_000
-SAMPLE_TEST = 5_000
+# Grown from 5k on Day 1: calibration half-width 0.0228 on 7,404 pseudo-test rows; fit h^2 = 3.564/n + 9e-6
+# puts h <= 0.015 at ~16.5k rows.
+SAMPLE_TEST = 16_500
 SPLIT_SEED = 0
 
 DEDUP_JACCARD = 0.8

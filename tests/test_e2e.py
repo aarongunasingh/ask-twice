@@ -9,7 +9,7 @@ import pyarrow.parquet as pq
 import pytest
 
 from asktwice.answer import AnswerCache, export_answers, run_jev, run_nli, split_rows
-from asktwice.config import BGE_DIMS
+from asktwice.config import BGE_DIMS, HANDLABEL_QUESTIONS
 from asktwice.data import filter_candidates, sample_handlabels, split_tables, write_splits
 from asktwice.features import TooManyFailures
 from asktwice.questions import load_questions
@@ -93,7 +93,7 @@ def test_fixture_end_to_end(tmp_path):
     assert summary["failures"]["jev"] == {"train": 1, "dev": 0, "test": 0}  # the fixture's one 422
     assert summary["rows_used"] == {"train": 119, "dev": 40, "test": 40}
     assert summary["answer_quality"]["status"] == "ok"
-    assert summary["answer_quality"]["judgments"] == 40 * len(load_questions().noul)  # 40 test rows x 4 noul
+    assert summary["answer_quality"]["judgments"] == 40 * min(HANDLABEL_QUESTIONS, len(load_questions().noul))
     assert summary["single_window"]["rows"] == 40
     assert summary["arm4_variant"]["chosen"] in {"raw", "stacked"}
     assert summary["scoring_log"]["dirty"] == "false"

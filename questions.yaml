@@ -1,6 +1,6 @@
-# Throwaway Day 0 set. Replace from ~150 blind dev narratives before tagging prereg-v1.
-# Do not inspect answerer output until that tag.
-status: throwaway-day0
+# Frozen for prereg-v1. Written by Claude (claude-opus-5) from 150 random dev narratives
+# (seed 0), without looking at relief labels or any answerer output.
+status: frozen
 
 direct:
   id: direct_relief
@@ -9,50 +9,159 @@ direct:
   nli_hypothesis: The consumer will receive monetary relief for this complaint.
 
 questions:
-  - id: mentions_amount
+  - id: employee_admitted_error
     type: noul
-    jev: Does the consumer mention a specific dollar amount, fee, or charge?
-    nli_hypothesis: The consumer mentions a specific dollar amount, fee, or charge.
+    jev: Does the consumer say a company employee admitted that the company made a mistake?
+    nli_hypothesis: A company employee admitted that the company made a mistake.
 
-  - id: contacted_company
+  - id: some_money_returned
     type: noul
-    jev: Does the consumer say they already contacted the company about this problem?
-    nli_hypothesis: The consumer already contacted the company about this problem.
+    jev: Does the consumer say the company has already given back some of the money in dispute?
+    criteria:
+      true: The company refunded, credited, or reversed at least part of the disputed money, and the consumer still has it.
+      false: The company has given none of the disputed money back, or gave a temporary credit that it later took back.
+    nli_hypothesis: The company has already given back some of the disputed money.
 
-  - id: asks_refund
+  - id: credit_taken_back
     type: noul
-    jev: Does the consumer ask for a refund, credit, or reimbursement?
-    nli_hypothesis: The consumer asks for a refund, credit, or reimbursement.
+    jev: Does the consumer say the company gave them a temporary credit and later took it back?
+    nli_hypothesis: The company gave the consumer a temporary credit and later took it back.
 
-  - id: unauthorized
+  - id: shared_access_code
     type: noul
-    jev: Does the consumer describe a charge or transfer they say they did not authorize?
-    nli_hypothesis: The consumer describes an unauthorized charge or transfer.
+    jev: Does the consumer say they gave a one-time code, password, or PIN to another person?
+    criteria:
+      true: The consumer, or someone on the account, told or sent a code, password, or PIN to another person, including someone pretending to be the bank.
+      false: Nobody on the account gave a code, password, or PIN to anyone.
+    nli_hypothesis: The consumer gave a one-time code, password, or PIN to another person.
 
-  - id: harm_scale
+  - id: reported_quickly
+    type: noul
+    jev: Does the consumer say they reported the problem to the company as soon as they discovered it?
+    nli_hypothesis: The consumer reported the problem to the company as soon as they discovered it.
+
+  - id: has_evidence
+    type: noul
+    jev: Does the consumer say they have documents, receipts, screenshots, or recordings that support their account of events?
+    nli_hypothesis: The consumer has documents, receipts, screenshots, or recordings that support their account.
+
+  - id: policy_cited
+    type: noul
+    jev: Does the consumer say the company justified its decision by pointing to its policy, terms, or account agreement?
+    nli_hypothesis: The company justified its decision by pointing to its policy, terms, or account agreement.
+
+  - id: conflicting_answers
+    type: noul
+    jev: Does the consumer say different company employees gave them conflicting information?
+    nli_hypothesis: Different company employees gave the consumer conflicting information.
+
+  - id: reason_withheld
+    type: noul
+    jev: Does the consumer say the company refused to tell them the reason for its decision?
+    nli_hypothesis: The company refused to tell the consumer the reason for its decision.
+
+  - id: wants_money_back
+    type: noul
+    jev: Does the consumer ask to get money back from the company?
+    criteria:
+      true: The consumer asks for a refund, reimbursement, reversal of a fee, compensation, or release of their own funds that the company is holding.
+      false: The consumer asks only for something other than money, such as an explanation, account access, a closed account, or an apology.
+    nli_hypothesis: The consumer asks to get money back from the company.
+
+  - id: legal_action
+    type: noul
+    jev: Does the consumer threaten or pursue legal action against the company?
+    nli_hypothesis: The consumer threatens or pursues legal action against the company.
+
+  - id: basic_needs_hardship
+    type: noul
+    jev: Does the consumer say the problem left them unable to pay for basic needs such as rent, bills, or food?
+    nli_hypothesis: The problem left the consumer unable to pay for basic needs such as rent, bills, or food.
+
+  - id: broken_promise
+    type: noul
+    jev: Does the consumer say a company employee promised a fix or refund that the company then failed to deliver?
+    nli_hypothesis: A company employee promised a fix or refund that the company then failed to deliver.
+
+  - id: companies_blame_each_other
+    type: noul
+    jev: Does the consumer say two companies are each telling them that the other one is responsible?
+    nli_hypothesis: Two companies are each telling the consumer that the other one is responsible.
+
+  - id: consumer_own_mistake
+    type: noul
+    jev: Does the consumer admit that a mistake of their own contributed to the problem?
+    criteria:
+      true: The consumer says they made an error, such as a typo in an account number or email address, depositing someone else's check, or sending money to the wrong person.
+      false: The consumer describes the problem as caused entirely by the company or by someone else.
+    nli_hypothesis: The consumer admits that a mistake of their own contributed to the problem.
+
+  - id: follow_up_effort
     type: score
-    jev: How large is the monetary harm the consumer describes?
+    jev: How far has the consumer pursued the problem with the company before filing this complaint?
     levels:
-      - The consumer does not describe a monetary loss.
-      - The consumer describes a fee or charge of under a hundred dollars.
-      - The consumer describes a loss of hundreds of dollars.
-      - The consumer describes a loss of thousands of dollars, a drained account, or an account closure.
+      - The consumer describes the problem without describing any contact with the company about it.
+      - The consumer contacted the company and is waiting for or disputes its answer.
+      - The consumer followed up with the company after an unsatisfactory answer.
+      - The consumer escalated to supervisors, managers, or an executive office after repeated follow-ups.
     nli_hypotheses:
-      - The consumer does not describe a monetary loss.
-      - The consumer describes a fee or charge of under a hundred dollars.
-      - The consumer describes a loss of hundreds of dollars.
-      - The consumer describes a loss of thousands of dollars, a drained account, or an account closure.
+      - The consumer has not contacted the company about the problem.
+      - The consumer contacted the company and is waiting for or disputes its answer.
+      - The consumer followed up with the company after an unsatisfactory answer.
+      - The consumer escalated to supervisors, managers, or an executive office after repeated follow-ups.
 
-  - id: company_response_so_far
+  - id: company_position
     type: score
-    jev: What does the consumer say the company has done so far?
+    jev: What position does the consumer say the company has taken on their request?
     levels:
-      - The consumer does not describe any response from the company.
-      - The consumer says the company acknowledged the issue but has not resolved it.
-      - The consumer says the company refused, ignored, or closed the request without help.
-      - The consumer says the company offered a partial fix that the consumer still disputes.
+      - The company formally denied the request or said its decision is final.
+      - The company has not given a decision, and the request is still pending or unanswered.
+      - The company agreed the consumer is right but has not yet paid.
+      - The company has already paid back part or all of the money.
     nli_hypotheses:
-      - The consumer does not describe any response from the company.
-      - The consumer says the company acknowledged the issue but has not resolved it.
-      - The consumer says the company refused, ignored, or closed the request without help.
-      - The consumer says the company offered a partial fix that the consumer still disputes.
+      - The company denied the consumer's request.
+      - The company has not yet decided on the consumer's request.
+      - The company agreed the consumer is right but has not yet paid.
+      - The company has already paid back part or all of the money.
+
+  - id: fault_shown
+    type: score
+    jev: How clearly does the consumer show that the company caused the problem?
+    levels:
+      - The consumer describes the problem without saying who caused it.
+      - The consumer blames the company without describing what the company did wrong.
+      - The consumer describes a specific action or failure by the company that caused the problem.
+      - The consumer describes a specific company failure and says the company's own records or staff confirmed it.
+    nli_hypotheses:
+      - The consumer describes a problem without saying who caused it.
+      - The consumer blames the company without describing what it did wrong.
+      - A specific action or failure by the company caused the problem.
+      - The company's own records or staff confirmed that the company caused the problem.
+
+  - id: consumer_role
+    type: score
+    jev: How much did the consumer's own actions lead to the loss?
+    levels:
+      - The loss happened without any action by the consumer, such as a bank processing error or a stolen card used without their knowledge.
+      - The consumer made an ordinary choice that the company then handled badly.
+      - The consumer made an error, such as a typo in an account number or email address.
+      - The consumer personally sent money or shared account access at the request of someone who deceived them.
+    nli_hypotheses:
+      - The loss happened without any action by the consumer.
+      - The consumer made an ordinary choice that the company then handled badly.
+      - The consumer made an error, such as a typo in an account number or email address.
+      - The consumer sent money or shared account access at the request of someone who deceived them.
+
+  - id: narrative_clarity
+    type: score
+    jev: How clearly does the complaint explain what happened?
+    levels:
+      - A fragment or run-on text that does not say what happened.
+      - Names the problem but leaves out what happened.
+      - Describes what happened in an order a reader can follow.
+      - Gives a clear, organized sequence of events and states what the consumer wants.
+    nli_hypotheses:
+      - The complaint does not say what happened.
+      - The complaint names a problem but does not explain what happened.
+      - The complaint describes what happened in an order a reader can follow.
+      - The complaint gives a clear sequence of events and states what the consumer wants.
