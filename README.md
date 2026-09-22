@@ -415,12 +415,16 @@ flowchart TD
 
 ### Setup
 
+Needs Python 3.11 or newer.
+
 ```bash
-uv sync --extra jev --extra nli   # or: python -m venv .venv && pip install -e ".[jev,nli]" pytest
-uv run pytest                     # no API key or model download needed
+python -m venv .venv
+source .venv/bin/activate            # Windows: .venv\Scripts\activate
+pip install -e ".[jev,nli]" pytest
+python -m pytest                     # no API key or model download needed
 ```
 
-Jev needs a key from [console.typesafe.ai](https://console.typesafe.ai/), in `TYPESAFE_API_KEY`.
+Commands below assume the virtual environment is active. Jev needs a key from [console.typesafe.ai](https://console.typesafe.ai/), in `TYPESAFE_API_KEY`.
 
 ### Run
 
@@ -437,24 +441,24 @@ for f in data/ccdb/*.zip; do unzip -o -q -d data/ccdb "$f"; done
 **2. Filter and split.** The committed `frozen/` splits already match `prereg-v2`. Re-running `split` with the same seed should reproduce them; compare against the hashes in `frozen/splits.json`.
 
 ```bash
-uv run python -m asktwice.data filter --csv "data/ccdb/*.csv"
-uv run python -m asktwice.data rates
-uv run python -m asktwice.data split
+python -m asktwice.data filter --csv "data/ccdb/*.csv"
+python -m asktwice.data rates
+python -m asktwice.data split
 ```
 
 **3. Answer.** Jev runs locally. NLI runs on a GPU: open [`colab_nli.ipynb`](colab_nli.ipynb) in Colab [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/aarongunasingh/ask-twice/blob/main/colab_nli.ipynb), pick a T4 GPU and choose Run all, then download `nli_answers.sqlite` into `data/`.
 
 ```bash
-uv run python -m asktwice.answer run jev
-uv run python -c "import sqlite3; c = sqlite3.connect('data/answers.sqlite'); c.execute(\"ATTACH 'data/nli_answers.sqlite' AS n\"); c.execute('INSERT OR IGNORE INTO answers SELECT * FROM n.answers'); c.commit()"
-uv run python -m asktwice.answer export
-uv run python -m asktwice.answer check-dev
+python -m asktwice.answer run jev
+python -c "import sqlite3; c = sqlite3.connect('data/answers.sqlite'); c.execute(\"ATTACH 'data/nli_answers.sqlite' AS n\"); c.execute('INSERT OR IGNORE INTO answers SELECT * FROM n.answers'); c.commit()"
+python -m asktwice.answer export
+python -m asktwice.answer check-dev
 ```
 
 **4. Score.** The command refuses to run before the prereg tag, appends a row to `results/scoring_log.csv`, and regenerates every number:
 
 ```bash
-uv run python -m asktwice.report
+python -m asktwice.report
 ```
 
 ---
