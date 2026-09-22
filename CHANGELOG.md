@@ -2,6 +2,14 @@
 
 Amendments after `prereg-v1` are tagged `prereg-v2` and recorded here. A question may be changed only if it is structurally broken for either answerer, only before the first test prediction, and the same change applies to both answerers.
 
+## After scoring (2026-09-22)
+
+Nothing here changes a number. The single scoring run is commit `b822279` in `results/scoring_log.csv`.
+
+- `results/headline.json` and `chart.png` were rewritten from that run's outputs to take out Jev dollar figures (TypeSafe MCA §14.1 treats pricing as confidential). The report now writes them to a gitignored `results/costs_private.json`.
+- The report's console summary is ASCII, so it no longer crashes on Windows (cp1252) consoles after writing its files.
+- Added `colab_nli.ipynb`, the notebook that produced the NLI answers, and rewrote `README.md` with the design, results and limitations.
+
 ## prereg-v2 (2026-09-22): pilot scale
 
 Cut at the owner's request so the NLI run fits in about an hour of Colab GPU time. No answer from either answerer had been inspected. Questions, products, models and the margin are unchanged from prereg-v1.
