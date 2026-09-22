@@ -10,7 +10,7 @@ The experiment is specified in [`PLAN.md`](PLAN.md). Frozen choices are tagged `
 
 ## Status
 
-Tagged `prereg-v1`: products, questions, splits and margin frozen (see [`CHANGELOG.md`](CHANGELOG.md)). Answer runs next.
+Tagged `prereg-v2`: a pilot-scale run (1,000 train, 5,000 test) of the `prereg-v1` design, with the same questions, products and models (see [`CHANGELOG.md`](CHANGELOG.md)). Answer runs next.
 
 ## Setup
 

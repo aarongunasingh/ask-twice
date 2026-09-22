@@ -130,7 +130,7 @@ def answer_quality(frozen: Path, built: Built) -> dict:
     path = frozen / "handlabels.csv"
     if not path.exists():
         return {"status": "no handlabels.csv"}
-    with path.open(encoding="utf-8") as f:
+    with path.open(encoding="utf-8-sig") as f:  # Excel's "CSV UTF-8" adds a BOM
         labels = list(csv.DictReader(f))
     blank = sum(not r["label"].strip() for r in labels)
     if blank:

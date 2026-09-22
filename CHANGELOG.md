@@ -2,6 +2,15 @@
 
 Amendments after `prereg-v1` are tagged `prereg-v2` and recorded here. A question may be changed only if it is structurally broken for either answerer, only before the first test prediction, and the same change applies to both answerers.
 
+## prereg-v2 (2026-09-22): pilot scale
+
+Cut at the owner's request so the NLI run fits in about an hour of Colab GPU time. No answer from either answerer had been inspected. Questions, products, models and the margin are unchanged from prereg-v1.
+
+- Splits: train 1,000 / dev 2,000 / test 5,000, re-drawn with the same seed (new hashes in `frozen/splits.json`).
+- Label counts: 300 and 1,000 only. The 1,000 point is a single fit on the whole pool. The 3,000 and 10,000 points are dropped, so "stops beating" is not measured.
+- Margin: ±0.02 kept. At 5,000 test rows the expected CI half-width (~0.025) is wider than the margin, so the verdict can be "Jev better", "NLI better" or "inconclusive", never "equivalent".
+- Hand labels: 20 test narratives × 5 Noul questions (was 100 × 5).
+
 ## prereg-v1 (2026-09-22)
 
 - Day 0: products frozen to "Checking or savings account" and "Money transfer, virtual currency, or money service" (train-pool relief rates 17.5% and 11.0%). Credit cards dropped: CFPB renamed "Credit card or prepaid card" to "Credit card" in 2023, so the train pool and test window share no product value. All 20 longest narratives passed the Jev probe (max 9,165 tokens), so `JEV_MAX_CHARS` stays `None`.

@@ -59,12 +59,11 @@ SELECTED_PRODUCTS: tuple[str, ...] | None = (
 RELIEF_RATE_LO = 0.05
 RELIEF_RATE_HI = 0.30
 
-# 20k + headroom: up to 2.5% answer failures still leave >= 20k, so 10k keeps 5 draws.
-SAMPLE_TRAIN = 20_500
+# prereg-v2 pilot: cut from 20,500 train / 16,500 test to keep the Colab NLI run under an hour.
+# At 5k test rows the CI half-width (~0.025) exceeds the ±0.02 margin, so "equivalent" is out of reach.
+SAMPLE_TRAIN = 1_000
 SAMPLE_DEV = 2_000
-# Grown from 5k on Day 1: calibration half-width 0.0228 on 7,404 pseudo-test rows; fit h^2 = 3.564/n + 9e-6
-# puts h <= 0.015 at ~16.5k rows.
-SAMPLE_TEST = 16_500
+SAMPLE_TEST = 5_000
 SPLIT_SEED = 0
 
 DEDUP_JACCARD = 0.8
@@ -75,7 +74,7 @@ COMPANY_TOP_K = 50
 N_NOUL = 15
 N_SCORE = 5
 
-LABEL_COUNTS = (300, 1_000, 3_000, 10_000)
+LABEL_COUNTS = (300, 1_000)  # prereg-v2 pilot; was (300, 1_000, 3_000, 10_000)
 N_SEEDS_SMALL = 10
 N_SEEDS_LARGE = 5
 N_BOOT = 1_000
@@ -85,7 +84,7 @@ PSEUDO_TEST_YEAR = 2022
 FAILURE_RATE_STOP = 0.01
 BROKEN_STD = 0.01  # dev answers this flat mark a question structurally broken (prereg-v2 candidate)
 
-HANDLABEL_ROWS = 100
+HANDLABEL_ROWS = 20  # prereg-v2 pilot; was 100
 HANDLABEL_QUESTIONS = 5
 HANDLABEL_SEED = 20260921
 
