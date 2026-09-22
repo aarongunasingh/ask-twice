@@ -99,7 +99,8 @@ def test_fixture_end_to_end(tmp_path):
     assert summary["scoring_log"]["dirty"] == "false"
     arms = {r["arm"] for r in csv.DictReader((out / "results.csv").open(encoding="utf-8"))}
     assert {"tabular", "bge_tab", "nli20_tab", "jev20_tab", "jev_direct"} <= arms
-    assert json.loads((out / "headline.json").read_text(encoding="utf-8"))["costs"]["jev_usd_per_10k_1x"] > 0
+    assert json.loads((out / "costs_private.json").read_text(encoding="utf-8"))["jev_usd_per_10k_1x"] > 0
+    assert "usd" not in (out / "headline.json").read_text(encoding="utf-8")
 
 
 def test_report_stops_on_test_failures(tmp_path):

@@ -256,19 +256,21 @@ def run_report(
     jev_direct = preds[(7, n_head)]
 
     tokens = built.jev_input_tokens
-    costs = {
-        "jev_usd_per_10k_1x": cost_per_10k(tokens, JEV_PRICE_PER_M_INPUT),
-        "jev_usd_per_10k_10x": cost_per_10k(tokens, 10 * JEV_PRICE_PER_M_INPUT),
-        "frontier_usd_per_10k_arithmetic": cost_per_10k(tokens, FRONTIER_PRICE_PER_M_INPUT),
+    compute = {
         "nli_compute_min_per_10k": built.nli_seconds * 10_000 / 60,
         "bge_compute_min_per_10k": built.bge_seconds * 10_000 / 60,
         "mean_jev_input_tokens": tokens,
     }
+    # TypeSafe MCA 14.1 treats pricing as confidential, so dollar figures go to a gitignored file.
+    usd = {
+        "jev_usd_per_10k_1x": cost_per_10k(tokens, JEV_PRICE_PER_M_INPUT),
+        "jev_usd_per_10k_10x": cost_per_10k(tokens, 10 * JEV_PRICE_PER_M_INPUT),
+        "frontier_usd_per_10k_arithmetic": cost_per_10k(tokens, FRONTIER_PRICE_PER_M_INPUT),
+    }
     legend = {
         "tabular": "$0",
-        "bge_tab": f"{costs['bge_compute_min_per_10k']:.0f} compute-min/10k",
-        "nli20_tab": f"{costs['nli_compute_min_per_10k']:.0f} compute-min/10k",
-        "jev20_tab": f"${costs['jev_usd_per_10k_1x']:.2f}/10k, ${costs['jev_usd_per_10k_10x']:.2f} at 10×",
+        "bge_tab": f"{compute['bge_compute_min_per_10k']:.0f} compute-min/10k",
+        "nli20_tab": f"{compute['nli_compute_min_per_10k']:.0f} compute-min/10k",
     }
 
     summary = {
@@ -286,7 +288,7 @@ def run_report(
             },
             "headline_delta_2026_only": subset_delta(y, jev, nli, np.array([d.year == 2026 for d in dates]), n_boot, rng),
         },
-        "costs": costs,
+        "compute": compute,
         "failures": built.failures,
         "rows_used": {s: len(built.rows[s]) for s in SPLITS},
         "answer_quality": answer_quality(frozen, built),
@@ -298,6 +300,7 @@ def run_report(
         w.writeheader()
         w.writerows(results)
     (out / "headline.json").write_text(json.dumps(summary, indent=2, default=str) + "\n", encoding="utf-8")
+    (out / "costs_private.json").write_text(json.dumps(usd, indent=2) + "\n", encoding="utf-8")
     render_chart(results, headline, out / "chart.png", costs=legend)
     return {"results": results, **summary}
 
@@ -309,7 +312,7 @@ def main(argv: list[str] | None = None) -> None:
     args = p.parse_args(argv)
     summary = run_report(args.frozen, args.out)
     h = summary["headline"]
-    print(f"Jev − NLI at {h['n_labels']}: {h['delta']:+.4f} [{h['lo']:+.4f}, {h['hi']:+.4f}] → {h['verdict']}")
+    print(f"Jev - NLI at {h['n_labels']}: {h['delta']:+.4f} [{h['lo']:+.4f}, {h['hi']:+.4f}] -> {h['verdict']}")  # ASCII: Windows consoles are cp1252
     print(f"wrote {args.out}/results.csv, headline.json, chart.png")
 
 

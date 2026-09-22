@@ -1,0 +1,147 @@
+{
+  "jev_model": "jev-1.13.0",
+  "headline": {
+    "n_labels": 1000,
+    "delta": 0.03629090456619424,
+    "lo": 0.00973683298571245,
+    "hi": 0.06604076285057195,
+    "verdict": "Jev better",
+    "margin": 0.02
+  },
+  "single_window": {
+    "rows": 4601,
+    "delta": 0.033227556210835785,
+    "lo": 0.0042277852563848625,
+    "hi": 0.06598167304537238,
+    "verdict": "Jev better"
+  },
+  "stops_beating_bge_tab": {
+    "first_n_not_beating": "never beats",
+    "by_n": {
+      "300": {
+        "delta": -0.0011023024497012757,
+        "lo": -0.056018817201970696,
+        "hi": 0.06327671197651251
+      },
+      "1000": {
+        "delta": 0.01181034745165463,
+        "lo": -0.01377294056968911,
+        "hi": 0.04566497689190984
+      }
+    }
+  },
+  "arm4_variant": {
+    "chosen": "stacked",
+    "dev_pr_auc": {
+      "raw": 0.23736595703184094,
+      "stacked": 0.24523000212830975
+    },
+    "at_n": 1000
+  },
+  "contamination_descriptive": {
+    "jev_direct_pr_auc_by_half_year": {
+      "2024H1": {
+        "rows": 489,
+        "pr_auc": 0.20942674796342559,
+        "lo": 0.15547250468350396,
+        "hi": 0.29414550358705055
+      },
+      "2024H2": {
+        "rows": 583,
+        "pr_auc": 0.2127523490266962,
+        "lo": 0.1646427239767829,
+        "hi": 0.28279059490688646
+      },
+      "2025H1": {
+        "rows": 2305,
+        "pr_auc": 0.09134202297047464,
+        "lo": 0.06423931266618846,
+        "hi": 0.1383293901405131
+      },
+      "2025H2": {
+        "rows": 900,
+        "pr_auc": 0.15186846311605912,
+        "lo": 0.11620054277173206,
+        "hi": 0.20915507158068442
+      },
+      "2026H1": {
+        "rows": 723,
+        "pr_auc": 0.16799080786761816,
+        "lo": 0.13068339016827651,
+        "hi": 0.22376391097298687
+      }
+    },
+    "headline_delta_2026_only": {
+      "rows": 723,
+      "delta": 0.05036419047280011,
+      "lo": -0.04228678120514219,
+      "hi": 0.13800805481266248,
+      "verdict": "inconclusive"
+    }
+  },
+  "compute": {
+    "nli_compute_min_per_10k": 53.47073638598069,
+    "bge_compute_min_per_10k": 21.159099164583495,
+    "mean_jev_input_tokens": 1670.724625
+  },
+  "failures": {
+    "jev": {
+      "train": 0,
+      "dev": 0,
+      "test": 0
+    },
+    "nli": {
+      "train": 0,
+      "dev": 0,
+      "test": 0
+    },
+    "bge": {
+      "train": 0,
+      "dev": 0,
+      "test": 0
+    }
+  },
+  "rows_used": {
+    "train": 1000,
+    "dev": 2000,
+    "test": 5000
+  },
+  "answer_quality": {
+    "status": "ok",
+    "judgments": 100,
+    "per_question": {
+      "companies_blame_each_other": {
+        "n": 20,
+        "jev_acc": 0.95,
+        "nli_acc": 0.2
+      },
+      "conflicting_answers": {
+        "n": 20,
+        "jev_acc": 0.95,
+        "nli_acc": 0.55
+      },
+      "employee_admitted_error": {
+        "n": 20,
+        "jev_acc": 0.95,
+        "nli_acc": 0.9
+      },
+      "reason_withheld": {
+        "n": 20,
+        "jev_acc": 0.95,
+        "nli_acc": 0.85
+      },
+      "wants_money_back": {
+        "n": 20,
+        "jev_acc": 0.8,
+        "nli_acc": 0.6
+      }
+    },
+    "jev_ece": 0.11480000000000001
+  },
+  "scoring_log": {
+    "utc": "2026-09-22T14:32:54+00:00",
+    "commit": "b8222796ecce8142a06fb0fbdac6f2fd8fb2a262",
+    "dirty": "false",
+    "diff_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+}
