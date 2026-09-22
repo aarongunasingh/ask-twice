@@ -13,3 +13,6 @@ uv.lock.bak
 data/
 *.sqlite
 *.sqlite-*
+
+# Raw Jev output stays local: TypeSafe MCA 2.3(b) bars using Output to train an imitation model.
+frozen/jev_answers.parquet
