@@ -9,7 +9,7 @@ Cut at the owner's request so the NLI run fits in about an hour of Colab GPU tim
 - Splits: train 1,000 / dev 2,000 / test 5,000, re-drawn with the same seed (new hashes in `frozen/splits.json`).
 - Label counts: 300 and 1,000 only. The 1,000 point is a single fit on the whole pool. The 3,000 and 10,000 points are dropped, so "stops beating" is not measured.
 - Margin: ±0.02 kept. At 5,000 test rows the expected CI half-width (~0.025) is wider than the margin, so the verdict can be "Jev better", "NLI better" or "inconclusive", never "equivalent".
-- Hand labels: 20 test narratives × 5 Noul questions (was 100 × 5).
+- Hand labels: 20 test narratives × 5 Noul questions (was 100 × 5). At the owner's request, a Claude subagent (claude-opus-5) filled them in instead of a person. It saw only `frozen/handlabels.csv`, never answerer output or relief labels. The "answer quality" figures therefore measure agreement with Claude, not with a human.
 
 ## prereg-v1 (2026-09-22)
 
